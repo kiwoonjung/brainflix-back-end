@@ -4,8 +4,8 @@ const app = express();
 const videoRoutes = require("./public/routes/video");
 const PORT = process.env.PORT || 5050;
 const cors = require("cors");
-app.use(cors());
 
+app.use(cors());
 app.use("/videos", videoRoutes);
 
 app.listen(PORT, () => {
