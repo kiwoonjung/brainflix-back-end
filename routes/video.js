@@ -17,10 +17,10 @@ router
         id: uuid(),
         title: req.body.title,
         channel: "DOMOMO",
-        image: "http://localhost:5050/Images/Upload.video-preview.jpg",
+        image: "http://localhost:5050/images/Domo.jpg",
         description: req.body.description,
-        views: 0,
-        likes: 0,
+        views: "9,392",
+        likes: "7,584",
         duration: "3:25",
         video: "https://project-2-api.herokuapp.com/stream",
         timestamp: Date.now(),
@@ -45,34 +45,3 @@ router.route("/:id").get((req, res) => {
 });
 
 module.exports = router;
-
-// .post((req, res) => {
-//   fs.readFileSync("./public/data/video-details.json", "utf-8",((err, data) =>{
-//     console.log(data)
-//     if(err){
-//       console.log(err)
-//     }else{
-//       const videoData = JSON.parse(data);
-//       console.log(videoData)
-//         videoData.push({
-//           "id": uuid(),
-//           "title": req.body.title,
-//           "channel": "DOMOMO",
-//           "image": "",
-//           "description": req.body.content,
-//           "views": "9,829",
-//           "likes": "8,392",
-//           "duration": "3:25",
-//           "video": "",
-//           "timestamp": new Date(),
-//           "comments": [],
-//         });
-//         fs.writeFileSync(
-//           "./public/data/video-details.json",
-//           JSON.stringify(videoData)
-//         );
-//         res.send("Video data updated");
-//     }
-
-//   }));
-// });
