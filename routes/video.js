@@ -60,7 +60,7 @@ router
         id: uuid(),
         name: "Kiwoon",
         comment: req.body.comment,
-        likes: "0",
+        likes: 0,
         timestamp: Date.now(),
       };
 
@@ -82,6 +82,68 @@ router
         JSON.stringify(newVideoData)
       );
       res.send("comment updated");
+    } else {
+      res.send("You forgot to include json data in your request");
+    }
+  });
+
+router
+  .route("/:videoId/comments/:commentId")
+  .get((req, res) => {
+    const data = fs.readFileSync("./data/video-details.json", "utf-8");
+    res.json(JSON.parse(data));
+  })
+  .delete((req, res) => {
+    const data = fs.readFileSync("./data/video-details.json", "utf-8");
+    const videoData = JSON.parse(data);
+    if (req.body) {
+      const selectedVideoId = req.params.videoId;
+      const selectedVideoCommentId = req.params.commentId;
+      const newVideoData = videoData.map((video) => {
+        if (video.id === selectedVideoId) {
+          const indexOfComment = video.comments.findIndex((object) => {
+            return object.id === selectedVideoCommentId;
+          });
+          video.comments.splice(indexOfComment, 1);
+          return video;
+        } else {
+          return video;
+        }
+      });
+      fs.writeFileSync(
+        "./data/video-details.json",
+        JSON.stringify(newVideoData)
+      );
+      res.send("comment deleted and updated");
+    } else {
+      res.send("You forgot to include json data in your request");
+    }
+  });
+
+router
+  .route("/:videoId/likes")
+  .get((req, res) => {
+    const data = fs.readFileSync("./data/video-details.json", "utf-8");
+    res.json(JSON.parse(data));
+  })
+  .put((req, res) => {
+    const data = fs.readFileSync("./data/video-details.json", "utf-8");
+    const videoData = JSON.parse(data);
+
+    console.log(videoData);
+
+    if (req.body) {
+      const newVideoData = videoData.map((video) => {
+        if (video.id === req.params.videoId) {
+          video.likes++;
+        }
+        return video;
+      });
+      fs.writeFileSync(
+        "./data/video-details.json",
+        JSON.stringify(newVideoData)
+      );
+      res.send("like updated");
     } else {
       res.send("You forgot to include json data in your request");
     }
